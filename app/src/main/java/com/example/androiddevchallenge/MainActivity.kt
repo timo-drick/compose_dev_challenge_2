@@ -22,6 +22,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -214,7 +215,12 @@ fun MyApp() {
 @Composable
 fun SetTimerDialog(currentSeconds: Int, newSecondsSet: (seconds: Int?) -> Unit) {
     var textValue by remember { mutableStateOf(currentSeconds.toString()) }
-    Box(Modifier.fillMaxSize().zIndex(10f).background(Color.Black.copy(alpha = 0.75f)), contentAlignment = Alignment.Center) {
+    Box(
+        Modifier.fillMaxSize().zIndex(10f)
+            .clickable(onClick = { newSecondsSet(null) })
+            .background(Color.Black.copy(alpha = 0.75f)),
+        contentAlignment = Alignment.Center
+    ) {
         Surface(shape = MaterialTheme.shapes.medium) {
             Column(Modifier.padding(16.dp)) {
                 Text("Set count down in seconds.", Modifier.padding(bottom = 4.dp))
