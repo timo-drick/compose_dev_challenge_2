@@ -9,7 +9,7 @@ Simple count down timer. You can set time in seconds and than it counts down to 
 Played around with size animations and also some canvas circle drawing.
 
 ## :camera_flash: Screenshots
-<img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">&emsp;<img src="/results/screenshot_3.png" width="260">
+<img src="/results/video.gif" width="260">&emsp;<img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">&emsp;<img src="/results/screenshot_3.png" width="260">
 
 ## License
 ```
