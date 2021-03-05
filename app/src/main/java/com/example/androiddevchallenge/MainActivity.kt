@@ -55,7 +55,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.zIndex
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import kotlinx.coroutines.launch
@@ -80,7 +79,7 @@ enum class TimerState {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    var countDownMax by remember { mutableStateOf(10)}
+    var countDownMax by remember { mutableStateOf(10) }
     val baseTextSize = 64.sp
     val gradientBase = listOf(Color.Red, Color.Red.copy(alpha = 0f))
     val gradientFilled = listOf(Color.Green, Color.Green.copy(alpha = 0f))
@@ -91,13 +90,16 @@ fun MyApp() {
     var counter by remember { mutableStateOf(countDownMax) }
     var dialogVisible by remember { mutableStateOf(false) }
     if (dialogVisible) {
-        SetTimerDialog(currentSeconds = countDownMax, newSecondsSet = {
-            dialogVisible = false
-            if (it != null) {
-                countDownMax = it
-                counter = countDownMax
+        SetTimerDialog(
+            currentSeconds = countDownMax,
+            newSecondsSet = {
+                dialogVisible = false
+                if (it != null) {
+                    countDownMax = it
+                    counter = countDownMax
+                }
             }
-        })
+        )
     }
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
         var counterMillis by remember { mutableStateOf(0L) }
@@ -106,14 +108,14 @@ fun MyApp() {
         val scope = rememberCoroutineScope()
         val transition = updateTransition(state)
         val textSizeMultiplier = transition.animateFloat {
-            when(it) {
-                TimerState.New      -> 3f
-                TimerState.Old      -> 1f
-                TimerState.Finish   -> 4f
+            when (it) {
+                TimerState.New -> 3f
+                TimerState.Old -> 1f
+                TimerState.Finish -> 4f
             }
         }
         val circleSize = transition.animateFloat {
-            when(it) {
+            when (it) {
                 TimerState.New -> .7f
                 TimerState.Old -> .9f
                 TimerState.Finish -> 3f
@@ -155,7 +157,8 @@ fun MyApp() {
                 .fillMaxSize()
                 .pointerInput(Unit) {
                     detectTapGestures(onTap = { startCounter() }, onLongPress = { if (isRunning.not()) dialogVisible = true })
-                }) {
+                }
+        ) {
             if (isRunning.not()) {
                 Column(Modifier.align(Alignment.TopCenter), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("Tap anywhere to start", Modifier.padding(8.dp))
@@ -176,12 +179,10 @@ fun MyApp() {
                 )
                 val angle = (Math.PI * 2.0) * (counterMillis.toFloat() / (1000f * countDownMax))
                 val angleDegree = (counterMillis.toFloat() / (1000f * countDownMax)) * 360f
-                //Log.d("Animation", "angle: $angle")
                 val end = Offset(
                     (center.x + sin(angle) * r).toFloat(),
                     (center.y - cos(angle) * r).toFloat()
                 )
-                //drawLine(Color.White, center, end)
                 drawArc(
                     brush = Brush.radialGradient(gradientFilled, radius = r),
                     size = Size(d, d),
